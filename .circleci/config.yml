@@ -1,0 +1,38 @@
+version: 2
+
+jobs:
+  test:
+    docker:
+      - image: busybox
+    steps:
+      - run: true
+
+  release:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - *restore_cache
+      - run: yarn install
+      - *save_cache
+      - run: yarn run semantic-release
+
+workflows:
+  version: 2
+  test-and-release:
+    jobs:
+      - test
+      - release:
+          requires:
+            test
+
+restore_cache: &restore_cache
+  restore_cache:
+    keys:
+      - yarn-cache-{{ checksum "yarn.lock" }}
+
+save_cache: &save_cache
+  save_cache:
+    key: yarn-cache-{{ checksum "yarn.lock" }}
+    paths:
+      - ~/.yarn
