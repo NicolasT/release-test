@@ -12,9 +12,7 @@ jobs:
       - image: circleci/node:8
     steps:
       - checkout
-      - *restore_cache
       - run: yarn install
-      - *save_cache
       - run: yarn run semantic-release
 
 workflows:
@@ -25,14 +23,3 @@ workflows:
       - release:
           requires:
             - test
-
-save_cache: &save_cache
-  save_cache:
-    key: yarn-cache-{{ checksum "yarn.lock" }}
-    paths:
-      - ~/.yarn
-
-restore_cache: &restore_cache
-  restore_cache:
-    keys:
-      - yarn-cache-{{ checksum "yarn.lock" }}
