@@ -1,7 +1,7 @@
 {
   "name": "zenko-zookeeper",
   "description": "Docker image and Helm Chart for Zookeeper, as deployed in Zenko",
-  "repository": "https://github.com/NicolasT/zenko-zookeeper.git",
+  "repository": "https://github.com/NicolasT/release-test.git",
   "author": "Nicolas Trangez <ikke@nicolast.be>",
   "license": "MIT",
   "private": true,
