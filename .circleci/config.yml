@@ -1,3 +1,4 @@
+# Huh?!
 version: 2
 
 jobs:
@@ -5,16 +6,14 @@ jobs:
     docker:
       - image: busybox
     steps:
-      - run: true
+      - run: 'true'
 
   release:
     docker:
       - image: circleci/node:8
     steps:
       - checkout
-      - *restore_cache
       - run: yarn install
-      - *save_cache
       - run: yarn run semantic-release
 
 workflows:
@@ -25,14 +24,3 @@ workflows:
       - release:
           requires:
             test
-
-restore_cache: &restore_cache
-  restore_cache:
-    keys:
-      - yarn-cache-{{ checksum "yarn.lock" }}
-
-save_cache: &save_cache
-  save_cache:
-    key: yarn-cache-{{ checksum "yarn.lock" }}
-    paths:
-      - ~/.yarn
